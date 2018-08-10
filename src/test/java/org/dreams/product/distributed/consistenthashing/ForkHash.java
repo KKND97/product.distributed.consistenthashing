@@ -64,7 +64,7 @@ public class ForkHash extends RecursiveAction {
     protected void computeDirectly() {
         for (int index = start; index <= finish; index++) {
             String key = "key" + index;
-            Node<String> keyToHostNode = consistentHashing.keyToNode(key);
+            Node<String> keyToHostNode = consistentHashing.getNodeByKey(key);
             AtomicInteger i = status.get(keyToHostNode);
             i.addAndGet(1);
         } //end for i 

@@ -122,7 +122,7 @@ public class ConsistentHashing<T> {
      * @param key
      * @return
      */
-    public Node<T> keyToNode(String key) {
+    public Node<T> getNodeByKey(String key) {
         
         rennlock.readLock()
                 .lock();
@@ -150,6 +150,15 @@ public class ConsistentHashing<T> {
             rennlock.readLock()
                     .unlock();
         }//end try
+    }
+    
+    /**
+     * 根据指定key获取node提供的资源
+     * @param key
+     * @return
+     */
+    public T getResourceByKey(String key) {
+        return getNodeByKey(key).getResource();
     }
 
     public HashAlgorithm getHashAlgorithm() {
