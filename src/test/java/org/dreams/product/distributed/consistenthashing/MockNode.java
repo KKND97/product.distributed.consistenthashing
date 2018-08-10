@@ -7,7 +7,7 @@ import org.dreams.product.distributed.consistenthashing.Node;
  * 此类主要目的:
  * 0、类封装了机器节点的信息 ，如name、password、host、port等
  * 
- * @author <a href="mailto:liujingwei@neusoft.com">Dreams Liu </a>
+ * @author <a href="mailto:liu_jing_wei@sohu.com">Dreams Liu </a>
  * @version $Revision 1.1 $ 2018年8月10日 上午8:40:44
  */
 public class MockNode implements Node<String> {
