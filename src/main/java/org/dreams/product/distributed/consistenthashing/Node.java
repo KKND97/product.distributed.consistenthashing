@@ -8,7 +8,7 @@ package org.dreams.product.distributed.consistenthashing;
  * @author <a href="mailto:liujingwei@neusoft.com">Dreams Liu </a>
  * @version $Revision 1.1 $ 2018年8月10日 上午8:40:44
  */
-public interface Node {
+public interface Node<T> {
     /**
      * 计算node的虚拟节点名称
      * @param node
@@ -16,7 +16,17 @@ public interface Node {
      * @return
      */
     public String getVirtualNodeName(int index);
-    
+
+    /**
+     * 返回node权重
+     * @return
+     */
     public int getWeight();
+
+    /**
+     * 返回node管理的资源
+     * @return
+     */
+    public T getResource();
 
 }

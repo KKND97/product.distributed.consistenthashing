@@ -45,7 +45,6 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.dreams.product.distributed.consistenthashing.impls.HostNode;
 
 public class ForkHash extends RecursiveAction {
     /**
@@ -57,15 +56,15 @@ public class ForkHash extends RecursiveAction {
 
     private int start;
     private int finish;
-    private Map<Node, AtomicInteger> status;
-    private ConsistentHashing consistentHashing = null;
+    private Map<Node<String>, AtomicInteger> status;
+    private ConsistentHashing<String> consistentHashing = null;
     private int threshold = 1000000;
 
     // Average pixels from source, write results into destination.
     protected void computeDirectly() {
         for (int index = start; index <= finish; index++) {
             String key = "key" + index;
-            Node keyToHostNode = consistentHashing.keyToNode(key);
+            Node<String> keyToHostNode = consistentHashing.getNodeByKey(key);
             AtomicInteger i = status.get(keyToHostNode);
             i.addAndGet(1);
         } //end for i 
@@ -97,8 +96,8 @@ public class ForkHash extends RecursiveAction {
 
     // Plumbing follows.
     public static void main(String[] args) throws Exception {
-        LinkedList<Node> nodeList = new LinkedList<Node>();
-        Map<Node, AtomicInteger> status = new HashMap<Node, AtomicInteger>();
+        LinkedList<Node<String>> nodeList = new LinkedList<Node<String>>();
+        Map<Node<String>, AtomicInteger> status = new HashMap<Node<String>, AtomicInteger>();
         int hostSize = 100;
         //int finish = Integer.MAX_VALUE;
         int finish = 1000000000;
@@ -132,9 +131,9 @@ public class ForkHash extends RecursiveAction {
         if (cmdline.hasOption("threshold")) {
             threshold = Integer.parseInt(cmdline.getOptionValue("threshold"));
         }
-        ConsistentHashing chash = new ConsistentHashing();
+        ConsistentHashing<String> chash = new ConsistentHashing<String>();
         for (int j = 0; j < hostSize; j++) {
-            HostNode node = new HostNode();
+            MockNode node = new MockNode();
             node.setName("host" + j);
             node.setHost("10.10.127." + j);
             node.setPort(6789);
@@ -157,7 +156,7 @@ public class ForkHash extends RecursiveAction {
 
         pool.invoke(forkhash);
         long sum = 0;
-        for (Node index : nodeList) {
+        for (Node<String> index : nodeList) {
             sum += status.get(index)
                          .get();
             log.info("index:" + index + ":" + status.get(index));
@@ -181,19 +180,19 @@ public class ForkHash extends RecursiveAction {
         this.finish = finish;
     }
 
-    public Map<Node, AtomicInteger> getStatus() {
+    public Map<Node<String>, AtomicInteger> getStatus() {
         return status;
     }
 
-    public void setStatus(Map<Node, AtomicInteger> status) {
+    public void setStatus(Map<Node<String>, AtomicInteger> status) {
         this.status = status;
     }
 
-    public ConsistentHashing getShared() {
+    public ConsistentHashing<String> getShared() {
         return consistentHashing;
     }
 
-    public void setShared(ConsistentHashing consistentHashing) {
+    public void setShared(ConsistentHashing<String> consistentHashing) {
         this.consistentHashing = consistentHashing;
     }
 
