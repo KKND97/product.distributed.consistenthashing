@@ -12,7 +12,7 @@ import redis.clients.jedis.JedisPoolConfig;
  * 0、实现了redis的node节点
  * 1、提供jredis连接池维护
  * 
- * @author <a href="mailto:liujingwei@neusoft.com">Dreams Liu </a>
+ * @author <a href="mailto:liu_jing_wei@sohu.com">Dreams Liu </a>
  * @version $Revision 1.1 $ 2018年8月10日 上午8:40:44
  */
 public class RedisNode implements Node<Jedis> {

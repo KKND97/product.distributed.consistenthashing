@@ -16,7 +16,7 @@ import org.apache.commons.logging.LogFactory;
  * 0、实现一致性hashcode的工具类
  * 1、允许动态增加、移除一致性算法中的node节点
  * 
- * @author <a href="mailto:liujingwei@neusoft.com">Dreams Liu </a>
+ * @author <a href="mailto:liu_jing_wei@sohu.com">Dreams Liu </a>
  * @version $Revision 1.1 $ 2018年8月10日 上午8:40:23
  */
 public class ConsistentHashing<T> { 

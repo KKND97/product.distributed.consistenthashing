@@ -8,7 +8,7 @@ import java.nio.ByteOrder;
  * 此类主要目的:
  * 0、默认实现一致性hash的hashcode算法
  * 
- * @author <a href="mailto:liujingwei@neusoft.com">Dreams Liu </a>
+ * @author <a href="mailto:liu_jing_wei@sohu.com">Dreams Liu </a>
  * @version $Revision 1.1 $ 2018年8月10日 上午8:42:45
  */
 public class DefaultHashAlgorithm implements HashAlgorithm {
