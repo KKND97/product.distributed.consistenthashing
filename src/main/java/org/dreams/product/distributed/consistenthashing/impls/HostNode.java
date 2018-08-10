@@ -10,7 +10,7 @@ import org.dreams.product.distributed.consistenthashing.Node;
  * @author <a href="mailto:liujingwei@neusoft.com">Dreams Liu </a>
  * @version $Revision 1.1 $ 2018年8月10日 上午8:40:44
  */
-public class HostNode implements Node {
+public class HostNode implements Node<String>  {
     /**
      * node名称
      */
@@ -100,5 +100,10 @@ public class HostNode implements Node {
 
     public void setFailureRate(float failureRate) {
         this.failureRate = failureRate;
+    }
+
+    @Override
+    public String getResource() {
+        return null;
     }
 }
