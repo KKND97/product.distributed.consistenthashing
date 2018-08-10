@@ -19,7 +19,7 @@ import org.apache.commons.logging.LogFactory;
  * @author <a href="mailto:liujingwei@neusoft.com">Dreams Liu </a>
  * @version $Revision 1.1 $ 2018年8月10日 上午8:40:23
  */
-public class ConsistentHashing { 
+public class ConsistentHashing<T> { 
 
     /**
      * 日志输出类
@@ -34,12 +34,12 @@ public class ConsistentHashing {
     /**
      * 虚拟节点到真实节点的映射
      */
-    private TreeMap<Long, Node> nodeMap = new TreeMap<Long, Node>();
+    private TreeMap<Long, Node<T>> nodeMap = new TreeMap<Long, Node<T>>();
 
     /**
      * 真实Node
      */
-    private List<Node> nodeList = new ArrayList<Node>();
+    private List<Node<T>> nodeList = new ArrayList<Node<T>>();
 
     /**
      * hash算法服务
@@ -72,7 +72,7 @@ public class ConsistentHashing {
      * 动态增加Node
      * @param node
      */
-    public void addHostNode(Node node) {
+    public void addHostNode(Node<T> node) {
         rennlock.writeLock()
                 .lock();
         try {
@@ -94,7 +94,7 @@ public class ConsistentHashing {
      * 删除真实节点是
      * @param node
      */
-    public void removeNode(Node node) {
+    public void removeNode(Node<T> node) {
         if (node == null) {
             return;
         }
@@ -122,7 +122,7 @@ public class ConsistentHashing {
      * @param key
      * @return
      */
-    public Node keyToNode(String key) {
+    public Node<T> keyToNode(String key) {
         
         rennlock.readLock()
                 .lock();
@@ -131,12 +131,12 @@ public class ConsistentHashing {
             /*
              * 沿环的顺时针找到一个虚拟节点
              */
-            SortedMap<Long, Node> tail = nodeMap.tailMap(hashAlgorithm.hashcode(key));
+            SortedMap<Long, Node<T>> tail = nodeMap.tailMap(hashAlgorithm.hashcode(key));
             /*
              * 如果没有比当前key大的节点，因为是环形结构，就使用第一个节点
              */
             if (tail.size() == 0) {
-                Entry<Long, Node> firstEntry = nodeMap.firstEntry();
+                Entry<Long, Node<T>> firstEntry = nodeMap.firstEntry();
                 if (firstEntry != null) {
                     return firstEntry.getValue();
                 } else {
